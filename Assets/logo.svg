@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <title>Bastion</title>
+  <defs>
+    <linearGradient id="g" x1="16" y1="24" x2="240" y2="232" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7C5CFF"/>
+      <stop offset="1" stop-color="#00C2FF"/>
+    </linearGradient>
+  </defs>
+  <!-- pé -->
+  <rect x="110" y="176" width="36" height="40" rx="6" fill="url(#g)"/>
+  <rect x="66" y="204" width="124" height="22" rx="11" fill="url(#g)"/>
+  <!-- monitor -->
+  <rect x="14" y="28" width="228" height="160" rx="26" fill="url(#g)"/>
+  <rect x="30" y="44" width="196" height="128" rx="14" fill="#12151B"/>
+  <!-- itens organizados -->
+  <rect x="48" y="58" width="24" height="24" rx="6.7" fill="#7C5CFF"/>
+  <rect x="84" y="62.8" width="112" height="14.4" rx="7.2" fill="#E8EAF0" fill-opacity="0.88"/>
+  <rect x="48" y="92" width="24" height="24" rx="6.7" fill="#00C2FF"/>
+  <rect x="84" y="96.8" width="82" height="14.4" rx="7.2" fill="#E8EAF0" fill-opacity="0.88"/>
+  <rect x="48" y="126" width="24" height="24" rx="6.7" fill="#3DDC97"/>
+  <rect x="84" y="130.8" width="128" height="14.4" rx="7.2" fill="#E8EAF0" fill-opacity="0.88"/>
+</svg>

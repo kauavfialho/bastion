@@ -1,0 +1,51 @@
+<Window x:Class="Bastion.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:core="clr-namespace:Bastion.Core"
+        Title="Bastion" Width="1200" Height="780" ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen" Icon="Assets/app.ico"
+        Background="{DynamicResource Bg}" Foreground="{StaticResource Fg}"
+        FontFamily="Segoe UI Variable Text, Segoe UI" FontSize="14"
+        TextOptions.TextFormattingMode="Display">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="236"/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+
+    <Border Background="{DynamicResource Sidebar}" BorderBrush="{DynamicResource CardBorder}" BorderThickness="0,0,1,0">
+      <Grid>
+      <!-- Chuva binária atrás dos botões (liga/desliga em Aparência) -->
+      <core:BinaryRain x:Name="Rain" Opacity="0.16" Visibility="Collapsed"/>
+      <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="22,26,0,24">
+          <Image Source="Assets/logo-256.png" Width="40" Height="40" RenderOptions.BitmapScalingMode="HighQuality"/>
+          <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+            <TextBlock Text="Bastion" FontSize="16.5" FontWeight="SemiBold"/>
+            <TextBlock x:Name="AdminText" FontSize="11.5" Foreground="{StaticResource Sub}"/>
+          </StackPanel>
+        </StackPanel>
+
+        <Button x:Name="AdminButton" DockPanel.Dock="Bottom" Style="{StaticResource BtnPrimary}" Margin="16,8,16,18"
+                Click="AdminButton_Click">
+          <StackPanel Orientation="Horizontal">
+            <TextBlock Text="&#xE7EF;" FontFamily="{StaticResource Icons}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+            <TextBlock Text="Modo administrador" VerticalAlignment="Center"/>
+          </StackPanel>
+        </Button>
+
+        <!-- Menu com rolagem fina: cabe qualquer quantidade de abas -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="0,0,2,0">
+          <StackPanel x:Name="Nav" Margin="0,0,0,8"/>
+        </ScrollViewer>
+      </DockPanel>
+      </Grid>
+    </Border>
+
+    <ContentControl x:Name="Host" Grid.Column="1"/>
+
+    <!-- Notificações -->
+    <StackPanel x:Name="Toasts" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                Margin="0,0,28,24" Width="380"/>
+  </Grid>
+</Window>

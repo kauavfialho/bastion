@@ -1,0 +1,30 @@
+# Segredos e variáveis de ambiente — NUNCA subir
+.env
+.env.*
+*.key
+*secret*
+*secrets*
+
+# Saídas de compilação
+bin/
+obj/
+dist/
+dist-*/
+publish/
+instalador/saida/
+
+# Visual Studio / Rider / VS Code
+.vs/
+.idea/
+*.user
+*.suo
+.vscode/
+
+# Sistema
+Thumbs.db
+desktop.ini
+*.log
+
+# Anotações locais do Claude Code
+CLAUDE.md
+.claude/
