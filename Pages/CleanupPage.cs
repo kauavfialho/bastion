@@ -116,7 +116,7 @@ namespace Bastion.Pages
         void UpdateTotal()
         {
             var sel = targets.Where(t => t.Box?.IsChecked == true).Sum(t => t.Size);
-            total.Text = $"Selecionado: {Ui.Size(sel)}";
+            total.Text = I18n.Tr("Selecionado: {0}", Ui.Size(sel));
         }
 
         async Task Clean()
@@ -148,7 +148,7 @@ namespace Bastion.Pages
         {
             var info = new SHQUERYRBINFO { cbSize = Marshal.SizeOf<SHQUERYRBINFO>() };
             SHQueryRecycleBin(null, ref info);
-            recycleText.Text = info.i64NumItems == 0 ? "A Lixeira está vazia." : $"{info.i64NumItems} item(ns) ocupando {Ui.Size(info.i64Size)}.";
+            recycleText.Text = info.i64NumItems == 0 ? I18n.Tr("A Lixeira está vazia.") : I18n.Tr("{0} item(ns) ocupando {1}.", info.i64NumItems, Ui.Size(info.i64Size));
         }
 
         async Task EmptyRecycleBin()

@@ -143,19 +143,19 @@ namespace Bastion.Pages
             const string baseHint = "Reduz um pouco a latência em placas recentes. Precisa reiniciar o PC.";
             if (state is not (bool supported, bool enabled))
             {
-                hint.Text = baseHint;
+                hint.Text = I18n.Tr(baseHint);
                 return;
             }
             if (!supported)
             {
-                hint.Text = "Sua placa de vídeo ou o driver não suportam essa opção.";
+                hint.Text = I18n.Tr("Sua placa de vídeo ou o driver não suportam essa opção.");
                 sw.IsEnabled = false;
                 return;
             }
             syncing = true;
             sw.IsChecked = enabled;
             syncing = false;
-            hint.Text = baseHint + (enabled ? "  ·  Ligado agora" : "  ·  Desligado agora");
+            hint.Text = I18n.Tr(baseHint) + I18n.Tr(enabled ? "  ·  Ligado agora" : "  ·  Desligado agora");
         }
 
         // ---------- Teste de conexão ----------

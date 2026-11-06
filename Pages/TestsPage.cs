@@ -42,7 +42,7 @@ namespace Bastion.Pages
             })
             {
                 var rb = Tab(name, "tests", name == test, () => { test = name; UpdateOptions(); });
-                rb.ToolTip = hint;
+                rb.ToolTip = I18n.Tr(hint);
                 tests.Children.Add(rb);
             }
             foreach (var m in new[] { 1, 5, 15, 30 })
@@ -72,7 +72,7 @@ namespace Bastion.Pages
 
         static RadioButton Tab(string text, string group, bool on, Action pick)
         {
-            var rb = new RadioButton { Style = (Style)Application.Current.FindResource("Tab"), GroupName = group, Content = text, IsChecked = on };
+            var rb = new RadioButton { Style = (Style)Application.Current.FindResource("Tab"), GroupName = group, Content = I18n.Tr(text), IsChecked = on };
             rb.Checked += (_, _) => pick();
             return rb;
         }
@@ -154,7 +154,7 @@ namespace Bastion.Pages
             if (test != "Disco")
             {
                 var total = TimeSpan.FromMinutes(minutes);
-                live.Children.Add(Ui.KV("Tempo", $"{elapsed:mm\\:ss} de {total:mm\\:ss}"));
+                live.Children.Add(Ui.KV("Tempo", $"{elapsed:mm\\:ss} / {total:mm\\:ss}"));
                 live.Children.Add(Ui.Bar(100 * elapsed.TotalSeconds / total.TotalSeconds));
             }
             else live.Children.Add(Ui.KV("Etapa", run.Phase.Length > 0 ? run.Phase : "Preparando"));

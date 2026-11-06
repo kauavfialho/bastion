@@ -78,11 +78,11 @@ namespace Bastion.Pages
 
             cpu.Value.Text = $"{m.Cpu.Last:0}%";
             cpu.Value.Foreground = Level(m.Cpu.Last, 85, 95);
-            cpu.Detail.Text = $"{Environment.ProcessorCount} threads";
+            cpu.Detail.Text = I18n.Tr("{0} threads", Environment.ProcessorCount);
 
             ram.Value.Text = $"{m.Ram.Last:0}%";
             ram.Value.Foreground = Level(m.Ram.Last, 80, 90);
-            ram.Detail.Text = $"{m.RamUsedGB:0.0} de {m.RamTotalGB:0} GB em uso";
+            ram.Detail.Text = I18n.Tr("{0} de {1} GB em uso", m.RamUsedGB.ToString("0.0"), m.RamTotalGB.ToString("0"));
 
             if (m.HasGpu)
             {
@@ -97,10 +97,10 @@ namespace Bastion.Pages
             else
             {
                 gpu.Value.Text = "—";
-                gpu.Detail.Text = "Leitura ao vivo disponível em placas NVIDIA";
+                gpu.Detail.Text = I18n.Tr("Leitura ao vivo disponível em placas NVIDIA");
             }
 
-            if (m.PingFailed && m.Ping.Values.Count == 0) { net.Value.Text = "Sem rede"; net.Value.Foreground = Ui.Bad; }
+            if (m.PingFailed && m.Ping.Values.Count == 0) { net.Value.Text = I18n.Tr("Sem rede"); net.Value.Foreground = Ui.Bad; }
             else if (m.Ping.Values.Count > 0)
             {
                 net.Value.Text = $"{m.Ping.Last:0} ms";
@@ -168,7 +168,7 @@ $def = $null; try { $def = (Get-MpComputerStatus -ErrorAction Stop).RealTimeProt
                 double usedPct = 100.0 * (d.TotalSize - d.TotalFreeSpace) / d.TotalSize;
                 var color = usedPct > 90 ? Ui.Bad : usedPct > 75 ? Ui.Warn : null;
                 var label = string.IsNullOrEmpty(d.VolumeLabel) ? "Disco local" : d.VolumeLabel;
-                disks.Children.Add(Ui.T($"{d.Name.TrimEnd('\\')}  {label}", 14, margin: new Thickness(0, 6, 0, 0)));
+                disks.Children.Add(Ui.T($"{d.Name.TrimEnd('\\')}  {I18n.Tr(label)}", 14, margin: new Thickness(0, 6, 0, 0)));
                 disks.Children.Add(Ui.Bar(usedPct, color));
                 disks.Children.Add(Ui.Hint($"{Ui.Size(d.TotalFreeSpace)} livres de {Ui.Size(d.TotalSize)}"));
             }

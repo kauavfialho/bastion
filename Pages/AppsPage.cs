@@ -101,7 +101,7 @@ namespace Bastion.Pages
 
         readonly List<Item> items = Catalog();
         readonly Dictionary<string, StackPanel> tabPanels = new();
-        readonly TextBox search = new() { Tag = "Buscar app…", Width = 260 };
+        readonly TextBox search = new() { Tag = I18n.Tr("Buscar app…"), Width = 260 };
         readonly TextBlock count = Ui.T("", 14.5, weight: FontWeights.SemiBold);
         readonly StackPanel progress = new();
         string currentTab = Games;
@@ -115,7 +115,7 @@ namespace Bastion.Pages
             var tabs = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center };
             foreach (var t in new[] { Games, Art, Programs })
             {
-                var rb = new RadioButton { Style = (Style)Application.Current.FindResource("Tab"), GroupName = "apps-tab", Content = t, IsChecked = t == Games };
+                var rb = new RadioButton { Style = (Style)Application.Current.FindResource("Tab"), GroupName = "apps-tab", Content = I18n.Tr(t), IsChecked = t == Games };
                 rb.Checked += (_, _) => { currentTab = t; Filter(); };
                 tabs.Children.Add(rb);
             }
@@ -211,7 +211,7 @@ namespace Bastion.Pages
         void Count()
         {
             var sel = items.Where(i => i.Box.IsChecked == true).ToList();
-            count.Text = sel.Count == 0 ? "Nenhum app selecionado" : $"{sel.Count} selecionado(s): " + string.Join(", ", sel.Select(i => i.Name).Take(8)) + (sel.Count > 8 ? "…" : "");
+            count.Text = sel.Count == 0 ? I18n.Tr("Nenhum app selecionado") : I18n.Tr("{0} selecionado(s): {1}", sel.Count, string.Join(", ", sel.Select(i => I18n.Tr(i.Name)).Take(8)) + (sel.Count > 8 ? "…" : ""));
         }
 
         public override Task LoadAsync() => Busy("Verificando o que já está instalado…", async () =>

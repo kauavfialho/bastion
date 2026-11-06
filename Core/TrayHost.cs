@@ -87,19 +87,19 @@ namespace Bastion.Core
             icon = new Forms.NotifyIcon
             {
                 Icon = Icon.ExtractAssociatedIcon(Admin.ExePath) ?? SystemIcons.Application,
-                Text = "Bastion - organizador ativo",
+                Text = I18n.Tr("Bastion - organizador ativo"),
                 Visible = true,
             };
             var menu = new Forms.ContextMenuStrip();
-            menu.Items.Add("Abrir Bastion", null, (_, _) => OpenApp());
-            menu.Items.Add("Organizar agora", null, (_, _) =>
+            menu.Items.Add(I18n.Tr("Abrir Bastion"), null, (_, _) => OpenApp());
+            menu.Items.Add(I18n.Tr("Organizar agora"), null, (_, _) =>
             {
                 int n = Organizer.OrganizeNow();
-                icon.ShowBalloonTip(3000, "Bastion", $"{n} arquivo(s) organizado(s).", Forms.ToolTipIcon.Info);
+                icon.ShowBalloonTip(3000, "Bastion", I18n.Tr("{0} arquivo(s) organizado(s).", n), Forms.ToolTipIcon.Info);
             });
-            menu.Items.Add("Ver registro", null, (_, _) => Admin.Open(Organizer.LogPath));
+            menu.Items.Add(I18n.Tr("Ver registro"), null, (_, _) => Admin.Open(Organizer.LogPath));
             menu.Items.Add(new Forms.ToolStripSeparator());
-            menu.Items.Add("Parar organizador", null, (_, _) => Stop());
+            menu.Items.Add(I18n.Tr("Parar organizador"), null, (_, _) => Stop());
             icon.ContextMenuStrip = menu;
             icon.DoubleClick += (_, _) => OpenApp();
 

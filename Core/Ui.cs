@@ -22,7 +22,7 @@ namespace Bastion.Core
 
         public static TextBlock T(string text, double size = 14, Brush? color = null, FontWeight? weight = null, Thickness? margin = null) => new()
         {
-            Text = text,
+            Text = I18n.Tr(text),
             FontSize = size,
             Foreground = color ?? Fg,
             FontWeight = weight ?? FontWeights.Normal,
@@ -51,6 +51,7 @@ namespace Bastion.Core
 
         public static Button Btn(string text, Action onClick, string kind = "", string? icon = null)
         {
+            text = I18n.Tr(text);
             var b = new Button { Style = R<Style>(kind switch { "primary" => "BtnPrimary", "danger" => "BtnDanger", _ => "Btn" }) };
             b.Content = icon == null ? text : new StackPanel
             {
@@ -161,7 +162,7 @@ namespace Bastion.Core
             if (Admin.IsAdmin) return;
             c.IsEnabled = true;
             c.Opacity = 0.7;
-            c.ToolTip = $"Precisa de administrador para {what}. Clique para reabrir como administrador.";
+            c.ToolTip = I18n.Tr($"Precisa de administrador para {what}. Clique para reabrir como administrador.");
             void Ask()
             {
                 if (Confirm($"Para {what}, o Bastion precisa estar aberto como administrador.\n\nReabrir como administrador agora? Você volta para esta mesma tela."))
@@ -172,7 +173,7 @@ namespace Bastion.Core
         }
 
         public static bool Confirm(string message) =>
-            MessageBox.Show(message, "Bastion", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+            MessageBox.Show(I18n.Tr(message), "Bastion", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
 
         /// <summary>Avisa o usuário com uma notificação no canto (ou caixa de mensagem fora da janela principal).</summary>
         public static void Info(string message)
@@ -187,7 +188,7 @@ namespace Bastion.Core
                 mw.ShowToast(message, bad ? Bad : hint ? Warn : Good);
                 return;
             }
-            MessageBox.Show(message, "Bastion", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(I18n.Tr(message), "Bastion", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         public static string Size(long bytes)
