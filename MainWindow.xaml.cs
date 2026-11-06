@@ -24,8 +24,22 @@ namespace Bastion
             var area = SystemParameters.WorkArea;
             Width = Math.Min(Width, area.Width - 24);
             Height = Math.Min(Height, area.Height - 24);
-            AdminText.Text = Admin.IsAdmin ? "Administrador" : "Modo limitado";
+            AdminText.Text = I18n.Tr(Admin.IsAdmin ? "Administrador" : "Modo limitado");
+            AdminButtonText.Text = I18n.Tr("Modo administrador");
             AdminButton.Visibility = Admin.IsAdmin ? Visibility.Collapsed : Visibility.Visible;
+
+            // Seletor de idioma, sempre à vista no topo
+            foreach (var lang in I18n.Languages)
+            {
+                var rb = new RadioButton
+                {
+                    Style = (Style)FindResource("Tab"), GroupName = "lang", Content = lang.ToUpperInvariant(),
+                    IsChecked = lang == I18n.Lang, FontSize = 12.5, Margin = new Thickness(2, 0, 0, 0),
+                    ToolTip = lang switch { "pt" => "Português", "en" => "English", _ => "Español" },
+                };
+                rb.Checked += (_, _) => I18n.Set(lang);
+                LangBar.Children.Add(rb);
+            }
 
             Add("", "Início", () => new HomePage(this));
             Add("", "Saúde do PC", () => new HealthPage());
@@ -48,6 +62,7 @@ namespace Bastion
             Theme.Changed += DarkTitleBar;
             Theme.Changed += ApplyRain;
             ApplyRain();
+            Closed += (_, _) => { Theme.Changed -= DarkTitleBar; Theme.Changed -= ApplyRain; };
         }
 
         void ApplyRain()
@@ -65,7 +80,7 @@ namespace Bastion
                 Children =
                 {
                     new TextBlock { Text = icon, FontFamily = (FontFamily)FindResource("Icons"), FontSize = 16, Width = 30, VerticalAlignment = VerticalAlignment.Center },
-                    new TextBlock { Text = title, VerticalAlignment = VerticalAlignment.Center }
+                    new TextBlock { Text = I18n.Tr(title), VerticalAlignment = VerticalAlignment.Center }
                 }
             };
             rb.Checked += (_, _) =>

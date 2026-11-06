@@ -80,13 +80,13 @@ namespace Bastion.Pages
         {
             if (delay) await Task.Delay(1200);
             bool running = TrayHost.IsRunning;
-            state.Text = running ? "● Ativo, organizando em segundo plano" : "○ Parado";
+            state.Text = I18n.Tr(running ? "● Ativo, organizando em segundo plano" : "○ Parado");
             state.Foreground = running ? Ui.Good : Ui.Sub;
             try
             {
                 log.Text = File.Exists(Organizer.LogPath)
                     ? string.Join(Environment.NewLine, File.ReadLines(Organizer.LogPath).Reverse().Take(60))
-                    : "Nenhuma movimentação ainda.";
+                    : I18n.Tr("Nenhuma movimentação ainda.");
             }
             catch { }
         }

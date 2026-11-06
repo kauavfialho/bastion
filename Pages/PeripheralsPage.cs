@@ -80,7 +80,7 @@ namespace Bastion.Pages
             var sw = new WrapPanel();
             void AddSwatch(string name, Brush b, Color c)
             {
-                var s = new Border { Width = 34, Height = 34, CornerRadius = new CornerRadius(8), Background = b, Margin = new Thickness(0, 0, 8, 8), Cursor = Cursors.Hand, ToolTip = name,
+                var s = new Border { Width = 34, Height = 34, CornerRadius = new CornerRadius(8), Background = b, Margin = new Thickness(0, 0, 8, 8), Cursor = Cursors.Hand, ToolTip = I18n.Tr(name),
                     BorderBrush = (Brush)Application.Current.FindResource("CardBorder"), BorderThickness = new Thickness(1) };
                 s.MouseLeftButtonUp += (_, _) => SetColor(c);
                 sw.Children.Add(s);

@@ -237,7 +237,7 @@ $apps = Get-WinEvent -FilterHashtable @{LogName='Application';ProviderName='Appl
             {
                 var code = Code(b.S("Text"));
                 var info = code is int c && BugChecks.TryGetValue(c, out var i) ? i : ("Código " + (code?.ToString("X") ?? "?"), "Causa não catalogada", false);
-                items.Add(Ui.KV(b.S("When"), $"{info.Item1}: {info.Item2}", Ui.Warn));
+                items.Add(Ui.KV(b.S("When"), $"{I18n.Tr(info.Item1)}: {I18n.Tr(info.Item2)}", Ui.Warn));
             }
 
             var apps = crash.A("Apps").ToList();

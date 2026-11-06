@@ -80,7 +80,7 @@ namespace Bastion.Pages
             void Update()
             {
                 int done = boxes.Count(b => b.IsChecked == true);
-                progressText.Text = done == boxes.Count ? $"Tudo pronto! {done} de {boxes.Count}" : $"{done} de {boxes.Count} feitos";
+                progressText.Text = done == boxes.Count ? I18n.Tr("Tudo pronto! {0} de {1}", done, boxes.Count) : I18n.Tr("{0} de {1} feitos", done, boxes.Count);
                 progressText.Foreground = done == boxes.Count ? Ui.Good : Ui.Sub;
                 bar.Value = 100.0 * done / boxes.Count;
             }
@@ -121,10 +121,10 @@ namespace Bastion.Pages
 $p = Get-CimInstance SoftwareLicensingProduct -Filter ""ApplicationID='55c92734-d682-4d71-983e-d6ec3f16059f' AND PartialProductKey IS NOT NULL"" -ErrorAction SilentlyContinue | Select-Object -First 1
 [pscustomobject]@{ Status = [int]$p.LicenseStatus; Channel = ""$($p.ProductKeyChannel)"" }");
                 var ok = r.D("Status") == 1;
-                activation.Text = ok ? $"✓ Seu Windows está ativado ({r.S("Channel")})." : "✗ Seu Windows NÃO está ativado: tenha uma chave em mãos antes de formatar.";
+                activation.Text = ok ? I18n.Tr("✓ Seu Windows está ativado ({0}).", r.S("Channel")) : I18n.Tr("✗ Seu Windows NÃO está ativado: tenha uma chave em mãos antes de formatar.");
                 activation.Foreground = ok ? Ui.Good : Ui.Warn;
             }
-            catch { activation.Text = "Não foi possível verificar a ativação."; }
+            catch { activation.Text = I18n.Tr("Não foi possível verificar a ativação."); }
 
             try
             {
@@ -177,7 +177,7 @@ $p = Get-CimInstance SoftwareLicensingProduct -Filter ""ApplicationID='55c92734-
                 "NÃO desligue nem tire o pendrive até terminar. O PC pode reiniciar algumas vezes.",
                 "A atualização volta tudo ao padrão: refaça os ajustes acima (principalmente XMP e Resizable BAR).",
             })
-                bios.Children.Add(Ui.T($"{n++}.  {s}", 13.5, margin: new Thickness(0, 3, 0, 3)));
+                bios.Children.Add(Ui.T($"{n++}.  {I18n.Tr(s)}", 13.5, margin: new Thickness(0, 3, 0, 3)));
 
             var (_, _, _, url) = MakerInfo(rep.Board, rep.Board, "", "");
             bios.Children.Add(Ui.Buttons(

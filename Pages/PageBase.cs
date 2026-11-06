@@ -33,7 +33,7 @@ namespace Bastion.Pages
 
         protected void Status(string text)
         {
-            status.Text = text;
+            status.Text = I18n.Tr(text);
             status.Visibility = string.IsNullOrEmpty(text) ? Visibility.Collapsed : Visibility.Visible;
         }
 

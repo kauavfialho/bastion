@@ -165,9 +165,9 @@ $sb = (Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\State
             var root = new StackPanel { Width = W, Background = B("#101216") };
             var head = new Border { Background = Theme.Gradient(Theme.CurrentAccent), Padding = new Thickness(56, 56, 56, 44) };
             var hs = new StackPanel();
-            hs.Children.Add(new TextBlock { Text = "Guia da BIOS", FontSize = 64, FontWeight = FontWeights.Bold, Foreground = Brushes.White });
+            hs.Children.Add(new TextBlock { Text = I18n.Tr("Guia da BIOS"), FontSize = 64, FontWeight = FontWeights.Bold, Foreground = Brushes.White });
             hs.Children.Add(new TextBlock { Text = rep.Board, FontSize = 34, Foreground = Brushes.White, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 8, 0, 0) });
-            hs.Children.Add(new TextBlock { Text = $"Entrar na BIOS: {rep.Menus.EnterKey} ao ligar  ·  Salvar: {rep.Menus.Save}", FontSize = 28, Foreground = Brushes.White, Opacity = 0.9, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 18, 0, 0) });
+            hs.Children.Add(new TextBlock { Text = I18n.Tr("Entrar na BIOS: {0} ao ligar  ·  Salvar: {1}", I18n.Tr(rep.Menus.EnterKey), I18n.Tr(rep.Menus.Save)), FontSize = 28, Foreground = Brushes.White, Opacity = 0.9, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 18, 0, 0) });
             head.Child = hs;
             root.Children.Add(head);
 
@@ -179,22 +179,22 @@ $sb = (Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\State
                 var cs = new StackPanel();
                 var top = new DockPanel();
                 var pill = new Border { Background = B(color), CornerRadius = new CornerRadius(16), Padding = new Thickness(18, 6, 18, 8), VerticalAlignment = VerticalAlignment.Center,
-                    Child = new TextBlock { Text = label, FontSize = 24, FontWeight = FontWeights.Bold, Foreground = B("#101216") } };
+                    Child = new TextBlock { Text = I18n.Tr(label), FontSize = 24, FontWeight = FontWeights.Bold, Foreground = B("#101216") } };
                 DockPanel.SetDock(pill, Dock.Right);
                 top.Children.Add(pill);
-                top.Children.Add(new TextBlock { Text = $"{n++}. {it.Title}", FontSize = 38, FontWeight = FontWeights.SemiBold, Foreground = Brushes.White, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 16, 0) });
+                top.Children.Add(new TextBlock { Text = $"{n++}. {I18n.Tr(it.Title)}", FontSize = 38, FontWeight = FontWeights.SemiBold, Foreground = Brushes.White, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 16, 0) });
                 cs.Children.Add(top);
-                cs.Children.Add(new TextBlock { Text = it.StatusText, FontSize = 28, Foreground = B(color), Margin = new Thickness(0, 10, 0, 0), TextWrapping = TextWrapping.Wrap });
-                cs.Children.Add(new TextBlock { Text = it.Why, FontSize = 28, Foreground = B("#AEB6C4"), Margin = new Thickness(0, 14, 0, 0), TextWrapping = TextWrapping.Wrap });
+                cs.Children.Add(new TextBlock { Text = I18n.Tr(it.StatusText), FontSize = 28, Foreground = B(color), Margin = new Thickness(0, 10, 0, 0), TextWrapping = TextWrapping.Wrap });
+                cs.Children.Add(new TextBlock { Text = I18n.Tr(it.Why), FontSize = 28, Foreground = B("#AEB6C4"), Margin = new Thickness(0, 14, 0, 0), TextWrapping = TextWrapping.Wrap });
                 var where = new Border { Background = B("#0F1114"), BorderBrush = new SolidColorBrush(accent), BorderThickness = new Thickness(4, 0, 0, 0), Padding = new Thickness(24, 18, 24, 20), Margin = new Thickness(0, 20, 0, 0) };
-                where.Child = new TextBlock { Text = it.Where, FontSize = 30, Foreground = Brushes.White, TextWrapping = TextWrapping.Wrap, FontFamily = new FontFamily("Segoe UI Semibold") };
+                where.Child = new TextBlock { Text = I18n.Tr(it.Where), FontSize = 30, Foreground = Brushes.White, TextWrapping = TextWrapping.Wrap, FontFamily = new FontFamily("Segoe UI Semibold") };
                 cs.Children.Add(where);
                 card.Child = cs;
                 root.Children.Add(card);
             }
             root.Children.Add(new TextBlock
             {
-                Text = "Se o PC não ligar depois de uma mudança, desligue, espere 10 s e ligue de novo: ele volta sozinho. Se não voltar, desligue o XMP/PBO.\nGerado pelo Bastion · " + DateTime.Now.ToString("dd/MM/yyyy"),
+                Text = I18n.Tr("Se o PC não ligar depois de uma mudança, desligue, espere 10 s e ligue de novo: ele volta sozinho. Se não voltar, desligue o XMP/PBO.\nGerado pelo Bastion · {0}", DateTime.Now.ToString("dd/MM/yyyy")),
                 FontSize = 24, Foreground = B("#7D8594"), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(56, 36, 56, 56),
             });
 
@@ -218,16 +218,16 @@ $sb = (Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot\State
         public static string SaveText(Report rep, string folder)
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"GUIA DA BIOS - {rep.Board}");
-            sb.AppendLine($"Entrar na BIOS: {rep.Menus.EnterKey} ao ligar | Salvar e sair: {rep.Menus.Save}");
+            sb.AppendLine(I18n.Tr("GUIA DA BIOS - {0}", rep.Board));
+            sb.AppendLine(I18n.Tr("Entrar na BIOS: {0} ao ligar | Salvar e sair: {1}", I18n.Tr(rep.Menus.EnterKey), I18n.Tr(rep.Menus.Save)));
             sb.AppendLine(new string('=', 60));
             int n = 1;
             foreach (var it in rep.Items)
             {
                 sb.AppendLine();
-                sb.AppendLine($"{n++}. {it.Title}  [{(it.Status == 0 ? "JÁ ESTÁ OK" : it.Status == 1 ? "AJUSTAR" : "CONFERIR")}] {it.StatusText}");
-                sb.AppendLine($"   Por quê: {it.Why}");
-                sb.AppendLine($"   Onde: {it.Where}");
+                sb.AppendLine($"{n++}. {I18n.Tr(it.Title)}  [{I18n.Tr(it.Status == 0 ? "JÁ ESTÁ OK" : it.Status == 1 ? "AJUSTAR" : "CONFERIR")}] {I18n.Tr(it.StatusText)}");
+                sb.AppendLine(I18n.Tr("   Por quê: {0}", I18n.Tr(it.Why)));
+                sb.AppendLine(I18n.Tr("   Onde: {0}", I18n.Tr(it.Where)));
             }
             var file = Path.Combine(folder, $"Guia da BIOS - {Safe(rep.Board)}.txt");
             File.WriteAllText(file, sb.ToString(), Encoding.UTF8);
