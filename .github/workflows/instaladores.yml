@@ -1,0 +1,63 @@
+name: Instaladores
+
+# criar uma tag v1.0.0 (ou rodar na mao pela aba Actions) gera os instaladores do windows
+# (x64 e arm64), a versao portatil e o latest.yml, e publica tudo numa Release do GitHub.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  construir:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Instala o NSIS
+        shell: pwsh
+        run: |
+          if (-not (Get-Command makensis -ErrorAction SilentlyContinue) -and -not (Test-Path "${env:ProgramFiles(x86)}\NSIS\makensis.exe")) {
+            choco install nsis -y --no-progress
+          }
+      - name: Confere a versao da tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        run: |
+          $versao = ([xml](Get-Content Bastion.csproj)).Project.PropertyGroup.Version | Where-Object { $_ } | Select-Object -First 1
+          if ("v$versao" -ne $env:GITHUB_REF_NAME) { throw "A tag $env:GITHUB_REF_NAME nao bate com a versao $versao do Bastion.csproj" }
+      - name: Gera instaladores, portatil e latest.yml
+        shell: pwsh
+        run: ./instalador/gerar.ps1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: instaladores-windows
+          # o yml traz o sha512 que o launcher confere antes de instalar uma versao nova
+          path: |
+            release/Bastion-win-x64.exe
+            release/Bastion-win-arm64.exe
+            release/Bastion-win-x64-portable.exe
+            release/latest.yml
+          if-no-files-found: error
+
+  publicar:
+    needs: construir
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: instaladores
+          merge-multiple: true
+      - name: Publica a release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" instaladores/* \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Bastion $GITHUB_REF_NAME" \
+            --notes "Baixe o instalador (Bastion-win-x64.exe para Intel/AMD, Bastion-win-arm64.exe para Windows ARM) ou a versão portátil (Bastion-win-x64-portable.exe). Na primeira vez, o Windows mostra um aviso: clique em \"Mais informações\" e depois em \"Executar assim mesmo\"."
