@@ -18,14 +18,14 @@ Click the file for your computer and the download starts right away. The link al
 
 | Computer | Download | Size |
 |---|---|---|
-| 64-bit Windows (Intel or AMD) | [⬇️ Download for Windows (.exe)](https://github.com/kauavfialho/bastion/releases/latest/download/Bastion-win-x64.exe) | ~64 MB |
-| Windows on ARM (Snapdragon) | [⬇️ Download for Windows ARM (.exe)](https://github.com/kauavfialho/bastion/releases/latest/download/Bastion-win-arm64.exe) | ~62 MB |
+| 64-bit Windows (Intel or AMD) | [⬇️ Download for Windows (.exe)](https://github.com/kauavfialho/bastion/releases/latest/download/Bastion-win-x64.exe) | 58 MB |
+| Windows on ARM (Snapdragon) | [⬇️ Download for Windows ARM (.exe)](https://github.com/kauavfialho/bastion/releases/latest/download/Bastion-win-arm64.exe) | 53 MB |
 
 ### Portable (no installation needed)
 
 | Computer | Download | Size |
 |---|---|---|
-| 64-bit Windows (Intel or AMD) | [⬇️ Download portable for Windows (.exe)](https://github.com/kauavfialho/bastion/releases/latest/download/Bastion-win-x64-portable.exe) | ~64 MB |
+| 64-bit Windows (Intel or AMD) | [⬇️ Download portable for Windows (.exe)](https://github.com/kauavfialho/bastion/releases/latest/download/Bastion-win-x64-portable.exe) | 64 MB |
 
 Works on Windows 10 and 11. There is no version for 32-bit Windows. Mac and Linux versions are planned; most features use tools that only exist on Windows, so they will be a different, smaller app.
 
@@ -68,6 +68,12 @@ dotnet build
 
 ```bash
 dotnet publish -c Release -o dist
+```
+
+To build the installers, the portable version and `latest.yml` locally (needs [NSIS](https://nsis.sourceforge.io)):
+
+```bash
+./instalador/gerar.ps1
 ```
 
 To create a new version, update `Version` in `Bastion.csproj` and publish a `v*` tag. GitHub Actions builds the installers and creates the Release. See [CONTRIBUTING.md](CONTRIBUTING.md) to work on the code.

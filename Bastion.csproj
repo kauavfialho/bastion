@@ -12,6 +12,10 @@
     <RootNamespace>Bastion</RootNamespace>
     <Product>Bastion</Product>
     <Version>1.0.0</Version>
+    <!-- O launcher lê a versão do .exe: precisa ser só "1.0.0", sem o código do commit no fim -->
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <Company>Kauã Fialho</Company>
+    <Copyright>© 2026 Kauã Fialho · MIT</Copyright>
     <SatelliteResourceLanguages>pt-BR</SatelliteResourceLanguages>
     <ApplicationIcon>Assets\app.ico</ApplicationIcon>
     <!-- Teste de disco usa memória alinhada para ler/gravar sem o cache do Windows -->
