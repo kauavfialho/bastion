@@ -4,7 +4,7 @@
 
 **🌐 Idioma:** [English](https://github.com/kauavfialho/bastion#readme) | **Português**
 
-App de Windows para cuidar do computador: CPU, RAM, placa de vídeo e ping ao vivo, saúde do PC com a causa provável dos travamentos, limpeza, ajustes para jogos, luzes dos periféricos, instalador de programas e um passo a passo para formatar o PC e configurar a BIOS. Sem login e sem servidor: nada sobre o seu computador sai dele.
+App de Windows para cuidar do computador: CPU, RAM, placa de vídeo e ping ao vivo, saúde do PC com a causa provável dos travamentos, limpeza, ajustes para jogos, periféricos com o app oficial certo, instalador de programas e um passo a passo para formatar o PC e configurar a BIOS. Sem login e sem servidor: nada sobre o seu computador sai dele.
 
 A ideia é ajudar qualquer pessoa, da criança ao avô, a deixar o computador rápido e saudável, de graça. O app foi gerado por inteligência artificial, a partir de uma ideia de Kauã Fialho.
 
@@ -47,7 +47,7 @@ Você também pode instalar e atualizar o Bastion pelo [Vitall Launcher](https:/
 - **Instalar apps:** 26 launchers de jogos e apps ArtCraft pelo winget, e programas do dia a dia pelo Ninite, de uma vez e sem propaganda.
 - **Formatar PC:** planos pré e pós-formatação que guardam o seu progresso, ajustes da BIOS com o que já está certo no seu PC e uma imagem com o guia da BIOS para o celular.
 - **Meu PC:** todas as peças e periféricos que o Windows consegue detectar, inclusive dual channel e controladoras.
-- **Periféricos:** as luzes de RAM, teclados, mouses e placas-mãe de várias marcas num lugar só (pelo OpenRGB), e controle dos apps de fabricante.
+- **Periféricos:** mostra seu mouse, teclado, fone, microfone e controle, com o app oficial certo de cada marca, e deixa os apps de fabricante sob controle.
 - **Testes:** estresse de CPU, RAM (com verificação de erros) e disco, que param sozinhos se a placa de vídeo esquentar demais.
 - **Drivers:** dispositivos com problema, os drivers principais e onde atualizar cada um.
 - **Aparência:** cores de destaque, fundos e uma chuva binária opcional na barra lateral.
