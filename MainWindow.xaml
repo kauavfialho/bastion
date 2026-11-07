@@ -7,6 +7,52 @@
         Background="{DynamicResource Bg}" Foreground="{StaticResource Fg}"
         FontFamily="Segoe UI Variable Text, Segoe UI" FontSize="14"
         TextOptions.TextFormattingMode="Display">
+  <!-- Barra de título própria: só minimizar e fechar (sem maximizar). Arrastar e encaixar continuam funcionando. -->
+  <WindowChrome.WindowChrome>
+    <WindowChrome CaptionHeight="32" ResizeBorderThickness="0" GlassFrameThickness="1" CornerRadius="0" UseAeroCaptionButtons="False"/>
+  </WindowChrome.WindowChrome>
+  <Window.Resources>
+    <Style x:Key="CaptionBtn" TargetType="Button">
+      <Setter Property="Width" Value="46"/>
+      <Setter Property="Height" Value="34"/>
+      <Setter Property="Foreground" Value="{StaticResource Sub}"/>
+      <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+      <Setter Property="Focusable" Value="False"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="b" Background="Transparent">
+              <TextBlock Text="{TemplateBinding Content}" FontFamily="Segoe MDL2 Assets" FontSize="10"
+                         HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="b" Property="Background" Value="#22FFFFFF"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="CloseBtn" TargetType="Button" BasedOn="{StaticResource CaptionBtn}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="b" Background="Transparent">
+              <TextBlock x:Name="t" Text="{TemplateBinding Content}" FontFamily="Segoe MDL2 Assets" FontSize="10"
+                         HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="b" Property="Background" Value="#E81123"/>
+                <Setter TargetName="t" Property="Foreground" Value="White"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+  </Window.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="236"/>
@@ -46,7 +92,13 @@
 
     <!-- Seletor de idioma: PT | EN | ES -->
     <StackPanel x:Name="LangBar" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top"
-                Margin="0,16,30,0"/>
+                Margin="0,6,104,0" WindowChrome.IsHitTestVisibleInChrome="True"/>
+
+    <!-- Minimizar e fechar -->
+    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+      <Button x:Name="MinButton" Style="{StaticResource CaptionBtn}" Content="&#xE921;" Click="MinButton_Click"/>
+      <Button x:Name="CloseButton" Style="{StaticResource CloseBtn}" Content="&#xE8BB;" Click="CloseButton_Click"/>
+    </StackPanel>
 
     <!-- Notificações -->
     <StackPanel x:Name="Toasts" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"

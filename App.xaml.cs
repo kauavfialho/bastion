@@ -33,6 +33,7 @@ namespace Bastion
             Theme.LoadSaved();
             var main = new MainWindow();
             MainWindow = main;
+            TestPlacement(main);
             main.Show();
 
             // "--pagina Limpeza": abre direto numa página
@@ -62,6 +63,21 @@ namespace Bastion
         {
             HwMonitor.Shared.Dispose();
             base.OnExit(e);
+        }
+    
+        /// <summary>
+        /// Só para quem desenvolve: BASTION_TESTE_JANELA="x,y" abre a janela nessa posição e sem roubar o foco
+        /// (por exemplo, no segundo monitor enquanto um jogo roda no principal). Usuários nunca têm essa variável.
+        /// </summary>
+        static void TestPlacement(Window w)
+        {
+            var v = Environment.GetEnvironmentVariable("BASTION_TESTE_JANELA");
+            if (string.IsNullOrEmpty(v)) return;
+            var p = v.Split(',');
+            if (p.Length != 2 || !double.TryParse(p[0], out var x) || !double.TryParse(p[1], out var y)) return;
+            w.WindowStartupLocation = WindowStartupLocation.Manual;
+            w.Left = x; w.Top = y;
+            w.ShowActivated = false;
         }
     }
 }

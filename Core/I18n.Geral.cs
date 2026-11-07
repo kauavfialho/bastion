@@ -215,7 +215,11 @@ namespace Bastion.Core
 
             // ---------- Organizador ----------
             ("Organizador de arquivos", "File organizer", "Organizador de archivos"),
-            ("Imagens vão para Imagens, vídeos vão para Vídeos, e todo o resto fica em Downloads. Funciona sozinho em segundo plano.", "Images go to Pictures, videos go to Videos, and everything else stays in Downloads. It works on its own in the background.", "Las imágenes van a Imágenes, los videos a Videos y todo lo demás se queda en Descargas. Funciona solo en segundo plano."),
+            ("Quando você baixa uma imagem ou um vídeo, ele sai de Downloads e vai para Imagens ou Vídeos. Nenhuma outra pasta é mexida.", "When you download an image or a video, it moves from Downloads to Pictures or Videos. No other folder is touched.", "Cuando descargas una imagen o un video, sale de Descargas y va a Imágenes o Videos. Ninguna otra carpeta se toca."),
+            ("Pastas dentro de Downloads", "Folders inside Downloads", "Carpetas dentro de Descargas"),
+            ("nunca são mexidas", "are never touched", "nunca se tocan"),
+            ("Só vale para arquivos novos. O que já estava em Downloads fica lá, a não ser que você use \"Organizar o que já está lá\".", "Only applies to new files. What was already in Downloads stays there unless you use \"Organize what's already there\".", "Solo vale para archivos nuevos. Lo que ya estaba en Descargas se queda ahí, a menos que uses \"Organizar lo que ya está ahí\"."),
+            ("Mover as imagens e vídeos que já estão em Downloads para Imagens e Vídeos?\n\nPastas dentro de Downloads não são mexidas. Tudo fica registrado em \"Últimas movimentações\".", "Move the images and videos already in Downloads to Pictures and Videos?\n\nFolders inside Downloads are not touched. Everything is logged in \"Latest moves\".", "¿Mover las imágenes y videos que ya están en Descargas a Imágenes y Videos?\n\nLas carpetas dentro de Descargas no se tocan. Todo queda registrado en \"Últimos movimientos\"."),
             ("Iniciar com o Windows", "Start with Windows", "Iniciar con Windows"),
             ("O organizador abre escondido perto do relógio toda vez que você liga o PC.", "The organizer opens hidden near the clock every time you turn on the PC.", "El organizador se abre oculto junto al reloj cada vez que enciendes el PC."),
             ("Imagens", "Images", "Imágenes"),
