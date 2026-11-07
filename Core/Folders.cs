@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace Bastion.Core
@@ -69,6 +70,7 @@ namespace Bastion.Core
         public static long DeleteContents(string path, string pattern = "*")
         {
             long freed = 0;
+            if (IsPersonal(path)) return 0;
             if (File.Exists(path))
             {
                 try { var len = new FileInfo(path).Length; File.Delete(path); return len; } catch { return 0; }
@@ -93,6 +95,26 @@ namespace Bastion.Core
                 }
             }
             return freed;
+        }
+
+        /// <summary>
+        /// Trava de segurança da limpeza: nunca apaga a raiz de um disco, a pasta do usuário nem as pastas
+        /// pessoais (Downloads, Área de Trabalho, Documentos, Imagens, Vídeos, Músicas), nem nada dentro delas.
+        /// </summary>
+        public static bool IsPersonal(string path)
+        {
+            string full;
+            try { full = Path.GetFullPath(path).TrimEnd('\\') + "\\"; } catch { return true; }
+            if (Path.GetPathRoot(full)?.TrimEnd('\\') + "\\" == full) return true;
+            var personal = new[]
+            {
+                Downloads, Desktop, Pictures, Videos,
+                Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                Environment.GetFolderPath(Environment.SpecialFolder.MyMusic),
+            };
+            foreach (var p in personal.Where(p => !string.IsNullOrEmpty(p)))
+                if (full.StartsWith(p.TrimEnd('\\') + "\\", StringComparison.OrdinalIgnoreCase)) return true;
+            return string.Equals(full, UserProfile.TrimEnd('\\') + "\\", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>Caminho livre no destino: "foto.jpg", "foto (1).jpg", ...</summary>

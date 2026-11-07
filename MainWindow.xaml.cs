@@ -58,6 +58,8 @@ namespace Bastion
             Add("", "Aparência", () => new AppearancePage());
 
             Navigate("Início");
+            MinButton.ToolTip = I18n.Tr("Minimizar");
+            CloseButton.ToolTip = I18n.Tr("Fechar");
             SourceInitialized += (_, _) => DarkTitleBar();
             Theme.Changed += DarkTitleBar;
             Theme.Changed += ApplyRain;
@@ -105,6 +107,8 @@ namespace Bastion
         }
 
         void AdminButton_Click(object sender, RoutedEventArgs e) => Admin.Relaunch();
+        void MinButton_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+        void CloseButton_Click(object sender, RoutedEventArgs e) => Close();
 
         /// <summary>Notificação que aparece no canto e some sozinha.</summary>
         public void ShowToast(string message, Brush color)
@@ -159,7 +163,9 @@ namespace Bastion
             DwmSetWindowAttribute(h, 20, ref on, 4);          // modo escuro
             var c = Theme.C(Theme.CurrentBackground.Sidebar);   // barra de título com a cor da barra lateral
             int caption = c.R | (c.G << 8) | (c.B << 16);      // COLORREF é BGR
-            DwmSetWindowAttribute(h, 35, ref caption, 4);       // cor da barra (Windows 11)
+            DwmSetWindowAttribute(h, 35, ref caption, 4);       // cor da borda/barra (Windows 11)
+            int round = 2;
+            DwmSetWindowAttribute(h, 33, ref round, 4);         // cantos arredondados (Windows 11)
         }
     }
 }

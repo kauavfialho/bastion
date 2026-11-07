@@ -57,6 +57,8 @@ namespace Bastion.Core
                     k.DeleteValue("PCManager Organizador", false);
                     k.SetValue(RunValue, $"\"{Admin.ExePath}\" --organizar");
                 }
+                // A parte de luzes (OpenRGB) saiu do Bastion: tira a entrada que ele tinha criado na inicialização
+                k?.DeleteValue("Bastion Luzes", false);
                 var oldLog = System.IO.Path.Combine(Folders.LocalAppData, "PCManager", "organizador.log");
                 if (System.IO.File.Exists(oldLog) && !System.IO.File.Exists(Organizer.LogPath))
                     System.IO.File.Move(oldLog, Organizer.LogPath);
