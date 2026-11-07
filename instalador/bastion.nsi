@@ -113,7 +113,8 @@ Section "Uninstall"
   RMDir "$INSTDIR"
   Delete "$SMPROGRAMS\${NOME}.lnk"
   Delete "$DESKTOP\${NOME}.lnk"
-  ; O organizador e as luzes deixam de abrir com o Windows. Configurações e registros em %LOCALAPPDATA%\Bastion ficam.
+  ; O organizador deixa de abrir com o Windows. Configurações e registros em %LOCALAPPDATA%\Bastion ficam.
   DeleteRegValue HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "Bastion Organizador"
+  DeleteRegValue HKCU "Software\Microsoft\Windows\CurrentVersion\Run" "Bastion Luzes"
   DeleteRegKey HKCU "${CHAVE_DESINSTALAR}"
 SectionEnd
