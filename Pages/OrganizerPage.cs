@@ -30,7 +30,7 @@ namespace Bastion.Pages
         readonly StackPanel oldTask = new();
 
         public OrganizerPage() : base("Organizador de arquivos",
-            "Imagens vão para Imagens, vídeos vão para Vídeos, e todo o resto fica em Downloads. Funciona sozinho em segundo plano.")
+            "Quando você baixa uma imagem ou um vídeo, ele sai de Downloads e vai para Imagens ou Vídeos. Nenhuma outra pasta é mexida.")
         {
             autoStart = Ui.Switch("Iniciar com o Windows", "O organizador abre escondido perto do relógio toda vez que você liga o PC.", TrayHost.AutoStart);
             autoStart.Checked += (_, _) => TrayHost.AutoStart = true;
@@ -40,6 +40,8 @@ namespace Bastion.Pages
             rules.Children.Add(Ui.KV("Imagens", "→ " + Folders.Pictures, Ui.Good));
             rules.Children.Add(Ui.KV("Vídeos", "→ " + Folders.Videos, Ui.Good));
             rules.Children.Add(Ui.KV("Qualquer outro arquivo", "fica onde está"));
+            rules.Children.Add(Ui.KV("Pastas dentro de Downloads", "nunca são mexidas"));
+            rules.Children.Add(Ui.Hint("Só vale para arquivos novos. O que já estava em Downloads fica lá, a não ser que você use \"Organizar o que já está lá\".", new Thickness(0, 8, 0, 0)));
             rules.Children.Add(Ui.Hint("Imagens: " + string.Join(" ", Organizer.ImageExt) + "\nVídeos: " + string.Join(" ", Organizer.VideoExt), new Thickness(0, 8, 0, 0)));
             rules.Children.Add(Ui.Hint("Pastas observadas: " + string.Join(",  ", Organizer.WatchedFolders()), new Thickness(0, 8, 0, 0)));
 
@@ -49,6 +51,7 @@ namespace Bastion.Pages
                     Ui.Btn("Parar", () => { TrayHost.RequestStop(); Refresh(delay: true); }, icon: ""),
                     Ui.Btn("Organizar o que já está lá", () =>
                     {
+                        if (!Ui.Confirm("Mover as imagens e vídeos que já estão em Downloads para Imagens e Vídeos?\n\nPastas dentro de Downloads não são mexidas. Tudo fica registrado em \"Últimas movimentações\".")) return;
                         int n = Organizer.OrganizeNow();
                         Ui.Info(n == 0 ? "Nada para organizar." : $"{n} arquivo(s) organizado(s).");
                         Refresh();

@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 namespace Bastion.Core
 {
     /// <summary>
-    /// Imagens vão para Imagens, vídeos para Vídeos, e todo o resto fica onde está.
-    /// Observa Downloads, Vídeos (para tirar imagens de lá) e a pasta Vídeos antiga do perfil.
+    /// Só arquivos NOVOS que chegam em Downloads: imagens vão para Imagens, vídeos para Vídeos,
+    /// o resto fica. Não mexe em nenhuma outra pasta (programas como o OBS salvam imagens em Vídeos)
+    /// nem no que já estava em Downloads antes de ligar; isso só com o botão "Organizar agora".
     /// </summary>
     public sealed class Organizer : IDisposable
     {
@@ -22,10 +23,7 @@ namespace Bastion.Core
 
         public static IEnumerable<string> WatchedFolders()
         {
-            var oldVideos = Path.Combine(Folders.UserProfile, "Videos");
-            return new[] { Folders.Downloads, Folders.Videos, oldVideos }
-                .Where(Directory.Exists)
-                .Distinct(StringComparer.OrdinalIgnoreCase);
+            return new[] { Folders.Downloads }.Where(Directory.Exists);
         }
 
         public void Start()
@@ -46,9 +44,10 @@ namespace Bastion.Core
         {
             var ext = Path.GetExtension(path).ToLowerInvariant();
             var folder = Path.GetDirectoryName(path) ?? "";
-            if (ImageExt.Contains(ext)) return string.Equals(folder, Folders.Pictures, StringComparison.OrdinalIgnoreCase) ? null : Folders.Pictures;
-            // Vídeos que já estão na pasta Vídeos ficam
-            if (VideoExt.Contains(ext)) return string.Equals(folder, Folders.Videos, StringComparison.OrdinalIgnoreCase) ? null : Folders.Videos;
+            // Só o que está direto em Downloads; subpastas (como uma pasta de projeto) nunca são tocadas
+            if (!string.Equals(folder.TrimEnd('\\'), Folders.Downloads.TrimEnd('\\'), StringComparison.OrdinalIgnoreCase)) return null;
+            if (ImageExt.Contains(ext)) return Folders.Pictures;
+            if (VideoExt.Contains(ext)) return Folders.Videos;
             return null;
         }
 
